@@ -1,0 +1,28 @@
+Size in default configuration:
+
+644K busybox
+
+When just using ls ( and I was not able to deselect ip for some reason, and one other checkbox)
+
+36K busybox
+
+Adding httpd leads to a increase in the filesize of 12K
+
+48K busybox
+
+When I deselect utilities I never use then I get the following filesize, telnet was deselected for example.  
+
+432K busybox
+
+
+Static linking
+
+The filesize was:
+
+1.2M busybox
+
+Yes it still works.
+
+Running a web server:
+
+Busybox was compiled with static linked libraries and the httpd selected. The memory size was also 1.2M. Maybe it did not show a difference due to the scaling. (Just some kb added). Setting up a small webpage called index.html in the directory where the httpd was started lead to the display of the webpage when pointing a browser to it. 
