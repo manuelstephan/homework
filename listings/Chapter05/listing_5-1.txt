@@ -1,0 +1,60 @@
+# Manuel Stephan 
+# Final Boot Sequence of the Kernel build
+# tried to shorten it like the one in the class lecture
+
+-----------------------------
+make -j2 ARCH=arm LOCALVERSION=-bone28 CROSS_COMPILE=arm-linux-gnueabi- dtbs
+-----------------------------
+  DTC     arch/arm/boot/dts/omap2420-h4.dtb
+  DTC     arch/arm/boot/dts/omap3-beagle.dtb
+  DTC     arch/arm/boot/dts/omap3-beagle-xm.dtb
+  DTC     arch/arm/boot/dts/omap3-evm.dtb
+  DTC     arch/arm/boot/dts/omap3-tobi.dtb
+  DTC     arch/arm/boot/dts/omap4-panda.dtb
+  DTC     arch/arm/boot/dts/omap4-panda-a4.dtb
+  DTC     arch/arm/boot/dts/omap4-panda-es.dtb
+  DTC     arch/arm/boot/dts/omap4-var-som.dtb
+  DTC     arch/arm/boot/dts/omap4-sdp.dtb
+  DTC     arch/arm/boot/dts/omap5-evm.dtb
+  DTC     arch/arm/boot/dts/am335x-evm.dtb
+  DTC     arch/arm/boot/dts/am335x-evmsk.dtb
+  DTC     arch/arm/boot/dts/am335x-bone.dtb
+  DTC     arch/arm/boot/dts/am335x-boneblack.dtb
+  DTC     arch/arm/boot/dts/am335x-tester.dtb
+`arch/arm/boot/zImage' -> `/home/manuel/Documents/excercises/linux-dev/deploy/3.8.13-bone28.zImage'
+`.config' -> `/home/manuel/Documents/excercises/linux-dev/deploy/3.8.13-bone28.config'
+-rwxrwxr-x 1 manuel manuel 3.2M Oct 14 16:35 /home/manuel/Documents/excercises/linux-dev/deploy/3.8.13-bone28.zImage
+-----------------------------
+Building modules archive...
+Compressing 3.8.13-bone28-modules.tar.gz...
+-rw-rw-r-- 1 manuel manuel 12M Oct 14 16:35 /home/manuel/Documents/excercises/linux-dev/deploy/3.8.13-bone28-modules.tar.gz
+-----------------------------
+Building firmware archive...
+Compressing 3.8.13-bone28-firmware.tar.gz...
+-rw-rw-r-- 1 manuel manuel 1.2M Oct 14 16:35 /home/manuel/Documents/excercises/linux-dev/deploy/3.8.13-bone28-firmware.tar.gz
+-----------------------------
+Building dtbs archive...
+`./arch/arm/boot/dts/omap2420-h4.dtb' -> `/home/manuel/Documents/excercises/linux-dev/deploy/tmp/omap2420-h4.dtb'
+`./arch/arm/boot/dts/omap5-evm.dtb' -> `/home/manuel/Documents/excercises/linux-dev/deploy/tmp/omap5-evm.dtb'
+`./arch/arm/boot/dts/am335x-tester.dtb' -> `/home/manuel/Documents/excercises/linux-dev/deploy/tmp/am335x-tester.dtb'
+`./arch/arm/boot/dts/omap4-panda-a4.dtb' -> `/home/manuel/Documents/excercises/linux-dev/deploy/tmp/omap4-panda-a4.dtb'
+`./arch/arm/boot/dts/omap3-tobi.dtb' -> `/home/manuel/Documents/excercises/linux-dev/deploy/tmp/omap3-tobi.dtb'
+`./arch/arm/boot/dts/am335x-bone.dtb' -> `/home/manuel/Documents/excercises/linux-dev/deploy/tmp/am335x-bone.dtb'
+`./arch/arm/boot/dts/am335x-boneblack.dtb' -> `/home/manuel/Documents/excercises/linux-dev/deploy/tmp/am335x-boneblack.dtb'
+`./arch/arm/boot/dts/omap3-evm.dtb' -> `/home/manuel/Documents/excercises/linux-dev/deploy/tmp/omap3-evm.dtb'
+`./arch/arm/boot/dts/omap4-sdp.dtb' -> `/home/manuel/Documents/excercises/linux-dev/deploy/tmp/omap4-sdp.dtb'
+`./arch/arm/boot/dts/am335x-evm.dtb' -> `/home/manuel/Documents/excercises/linux-dev/deploy/tmp/am335x-evm.dtb'
+`./arch/arm/boot/dts/omap4-panda-es.dtb' -> `/home/manuel/Documents/excercises/linux-dev/deploy/tmp/omap4-panda-es.dtb'
+`./arch/arm/boot/dts/omap3-beagle-xm.dtb' -> `/home/manuel/Documents/excercises/linux-dev/deploy/tmp/omap3-beagle-xm.dtb'
+`./arch/arm/boot/dts/omap4-var-som.dtb' -> `/home/manuel/Documents/excercises/linux-dev/deploy/tmp/omap4-var-som.dtb'
+`./arch/arm/boot/dts/omap4-panda.dtb' -> `/home/manuel/Documents/excercises/linux-dev/deploy/tmp/omap4-panda.dtb'
+`./arch/arm/boot/dts/am335x-evmsk.dtb' -> `/home/manuel/Documents/excercises/linux-dev/deploy/tmp/am335x-evmsk.dtb'
+`./arch/arm/boot/dts/omap3-beagle.dtb' -> `/home/manuel/Documents/excercises/linux-dev/deploy/tmp/omap3-beagle.dtb'
+Compressing 3.8.13-bone28-dtbs.tar.gz...
+-rw-rw-r-- 1 manuel manuel 33K Oct 14 16:35 /home/manuel/Documents/excercises/linux-dev/deploy/3.8.13-bone28-dtbs.tar.gz
+-----------------------------
+Script Complete
+eewiki.net: [user@localhost:~$ export kernel_version=3.8.13-bone28]
+-----------------------------
+manuel@linus:~/Documents/excercises/linux-dev$ 
+
