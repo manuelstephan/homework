@@ -1,34 +1,28 @@
-My matrixLED.js only controls one of the two LEDs in the matrix. Your task is to make it 
+1. Before writing any code, write a paragraph describing how boneServer.js and the browser interact in the given example. For example, in matrixLED.js connect() is called to make 
+a connection between the browser and the bone. The message “matrix” is sent to the bone. What happens in response to the message? 
 
-control both LEDS. One approach would be to have the first click turn on the Green LED, the 2nd
-
-turn on both, the 3rd
-
-1. Before writing any code, write a paragraph describing how boneServer.js and the browser 
-
-interact in the given example. For example, in matrixLED.js connect() is called to make 
-
-a connection between the browser and the bone. The message “matrix” is sent to the 
-
-bone. What happens in response to the message? 
-
+The bone gets the matrix message and starts to read all i2c registers of the led matrix and updates the matrix shown in the browser. 
 
 
 2. What happens when an “LED” is clicked on in the browser?
+When a led is clicked in the browser it is decoded and sent to the bone, the bone will use i2c set to set the led in the matrix correctly. The browser is also updated. 
 
-
-
+ 
 3. What entry in matrix.css is used to color the LED?
 
 The attribute backgroundcolour is used to define the colour of the LED. 
+As I use 3 different colors now I added classes with different colours. 
 
 
 
+4. Write a high level paragraph about how you will control the two LEDs. What messages will be sent between the browser and the bone?
 
-4. Write a high level paragraph about how you will control the two LEDs. What messages 
+When the bone is first connected to the server it will read the values of the existing matrix and update the values in the browser. 
 
-will be sent between the browser and the bone?
-
+This is a finite state machine with two states to wich I added two more. 
+Now we have off -> green -> red -> yellow. If a led is clicked the finite state machine goes to the next state and the leds in the matrix are updated. The leds in the browser also have to chage thir colours so additional classes in css have to be added. 
 
 
 5. Write your code. Do you need to change boneServer.js? (I don’t think so.)
+
+The bone server had to be changed to display the red leds. 
