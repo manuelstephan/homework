@@ -29,7 +29,7 @@ From https://www.ridgerun.com/developer/wiki/index.php/Gpio-int-test.c
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-// modified by Manuel Stephan 
+// modified by Manuel Stephan to perform etch a sketch
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -46,6 +46,9 @@ From https://www.ridgerun.com/developer/wiki/index.php/Gpio-int-test.c
  
 #define POLL_TIMEOUT (3 * 1000) /* 3 seconds */
 #define MAX_BUF 64
+
+const int MATDIM1 = 8; // y dimension
+const int MATDIM2 = 8; // x dimension
 
 /****************************************************************
  * Global variables
@@ -69,59 +72,55 @@ void signal_handler(int sig)
  ****************************************************************/
 int main(int argc, char **argv, char **envp)
 {
+
+ int i,j,xpos=0,ypos=0,running=1;
+ char c,dummy;
+ int matrix[MATDIM1][MATDIM2];
+// init the matrix
+for( i=0; i< MATDIM1; i++)
+ for( j=0; j< MATDIM2; j++)
+ { 
+  matrix[i][j]=0;
+ } 
 	struct pollfd fdset[5]; // modified to 3, 2 previously ... 
 	int nfds = 5; // how many different gpiointerrupts do you have, thats nfds ... 
 	int gpio_fd[4], timeout, rc;
 	char buf[MAX_BUF];
-	unsigned int gpio;
 	int len;
-int i; // counter variable ... 
-int ledport[4] = {60,48,49,30}; // gpios of leds 
+
+
 int buttonport[4] = {23,7,26,51}; //gpios of buttons  
-int toggle[4] = {0}; // array used to toggle leds ... 
+
 
 signal(SIGINT, signal_handler);
 
-// access led
+system("echo 'Welcome to a basic etch-a-sketch program!'");
+system("echo '========================================='");
+	
+// export buttonIOs, set direction to in and set edges
 for(i=0;i<4;i++)
 {
-	gpio_export(ledport[i]);
-	gpio_set_dir(ledport[i],"out");
-	gpio_set_value(ledport[i],0);
-}
-	
-	
-
-	for(i=0;i<4;i++)
-	{
 	gpio_export(buttonport[i]);
 	gpio_set_dir(buttonport[i], "in");
 	gpio_set_edge(buttonport[i], "both");  // Can be rising, falling or both
 	gpio_fd[i] = gpio_fd_open(buttonport[i], O_RDONLY);
-	}
+}
 
-  
-
-	timeout = POLL_TIMEOUT;
+timeout = POLL_TIMEOUT;
   
 	while (keepgoing) {
 		memset((void*)fdset, 0, sizeof(fdset));
-
+		
+	
+		
 		
 		fdset[0].fd = STDIN_FILENO;
 		fdset[0].events = POLLIN;
-      
-		fdset[1].fd = gpio_fd[0];
-		fdset[1].events = POLLPRI;
- 
-		fdset[2].fd = gpio_fd[1];
-		fdset[2].events = POLLPRI;
 
-		fdset[3].fd = gpio_fd[2];
-		fdset[3].events = POLLPRI;
-
-		fdset[4].fd = gpio_fd[3];
-		fdset[4].events = POLLPRI;
+		for(i=1;i<5;i++){
+		fdset[i].fd = gpio_fd[(i-1)];
+		fdset[i].events = POLLPRI;
+		}
 
 		rc = poll(fdset, nfds, timeout);      
 
@@ -130,26 +129,34 @@ for(i=0;i<4;i++)
 			return -1;
 		}
       
-		if (rc == 0) {
-			printf(".");
-		}
+		
             for(i=1;i<5;i++)
 	    {
 		if (fdset[i].revents & POLLPRI) {
 			lseek(fdset[i].fd, 0, SEEK_SET);  // Read from the start of the file
 			len = read(fdset[i].fd, buf, MAX_BUF);
-			printf("\npoll() GPIO %d interrupt occurred, value=%c, len=%d\n",
-				 buttonport[i-1], buf[0], len);
-		if(buf[0] == '1')
-		toggle[i-1] = !toggle[i-1];
+			//printf("\npoll() GPIO %d interrupt occurred, value=%c, len=%d\n",buttonport[i-1], buf[0], len);
+		if((buf[0] == '1')&&(xpos < (MATDIM2-1))&&(i==1))
+			xpos++;
+		if((buf[0] == '1')&&(xpos > 0)&&(i==2))
+			xpos--;
+		if((buf[0] == '1')&&(ypos > 0)&&(i==3))
+			ypos--;
+		if((buf[0] == '1')&&(ypos < (MATDIM1-1))&&(i==4))
+			ypos++;
+		
 		}
 	    }
-	for(i=0;i<4;i++) {      
-		if(toggle[i])
-		gpio_set_value(ledport[i],1);
-		else
-		gpio_set_value(ledport[i],0);
-	}
+	matrix[ypos][xpos]=1;
+        system("echo '\n'");
+	for( i=0; i< MATDIM1; i++)
+	 for( j=0; j< MATDIM2; j++)
+	 { 
+	  printf("%i  ",matrix[i][j]);
+	  if(j==(MATDIM2-1))
+	  printf("\n");
+	 } 
+ 
 		
 		if (fdset[0].revents & POLLIN) {
 			(void)read(fdset[0].fd, buf, 1);
@@ -159,10 +166,7 @@ for(i=0;i<4;i++)
 		fflush(stdout);
        
 	}
-	for(i=0;i<4;i++){
-	gpio_fd_close(ledport[i]);
-	gpio_fd_close(buttonport[i]);
-	}
+	
 	
 	return 0;
         
