@@ -1,0 +1,64 @@
+diff --git a/drivers/char/Kconfig b/drivers/char/Kconfig
+index 72bedad..54859d5 100644
+--- a/drivers/char/Kconfig
++++ b/drivers/char/Kconfig
+@@ -6,6 +6,13 @@ menu "Character devices"
+ 
+ source "drivers/tty/Kconfig"
+ 
++config EXAMPLES
++	tristate "Enable Examples"
++	default m
++	help
++	Enable compilation option for driver examples
++
++
+ config DEVKMEM
+ 	bool "/dev/kmem virtual device support"
+ 	default y
+diff --git a/drivers/char/Makefile b/drivers/char/Makefile
+index 7ff1d0d..0833c81 100644
+--- a/drivers/char/Makefile
++++ b/drivers/char/Makefile
+@@ -58,6 +58,7 @@ obj-$(CONFIG_TCG_TPM)		+= tpm/
+ 
+ obj-$(CONFIG_PS3_FLASH)		+= ps3flash.o
+ 
++obj-$(CONFIG_EXAMPLES) 		+= examples/
+ obj-$(CONFIG_JS_RTC)		+= js-rtc.o
+ js-rtc-y = rtc.o
+ 
+diff --git a/drivers/char/examples/Makefile b/drivers/char/examples/Makefile
+new file mode 100644
+index 0000000..ffda336
+--- /dev/null
++++ b/drivers/char/examples/Makefile
+@@ -0,0 +1 @@
++obj-$(CONFIG_EXAMPLES) += hello1.o
+diff --git a/drivers/char/examples/hello1.c b/drivers/char/examples/hello1.c
+new file mode 100644
+index 0000000..6d34f7d
+--- /dev/null
++++ b/drivers/char/examples/hello1.c
+@@ -0,0 +1,21 @@
++/* Manuels Example Minimal Character Device Driver */
++#include <linux/module.h>
++
++static int __init hello_init(void)
++{
++printk("Hello Example Init\n");
++return 0;
++}
++
++static void __exit hello_exit(void)
++{
++printk("Hello Example Exit\n");
++}
++
++module_init(hello_init);
++module_exit(hello_exit);
++MODULE_AUTHOR("Manuel Stephan");
++MODULE_DESCRIPTION("Hello World Example");
++MODULE_LICENSE("GPL");
++
++
