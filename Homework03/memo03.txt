@@ -1,0 +1,21 @@
+Manuel Stephan, eLinux memo03.
+===============================
+
+Exercises:
+==========
+Exercise 12: I2C: 
+TMPaddrfloat: 0x49
+
+
+Assignments:
+============
+
+TMP101: 
+The TI-TMP101 has one Pin that is used to configure its address so that more than one of the same IC can be used on one bus. There are three modes: Pullup, Pulldown and floating that all result in a different address of the TMP. 
+
+
+
+Comments:
+=========
+Just googled:
+Slew Rate: The slew rate defines how fast a edge rises/falls if the voltage of an outputpin is changed. This is important if you got capacitative load like the gate of a big MOS-FET. 
