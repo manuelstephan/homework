@@ -1,21 +1,21 @@
 // This program was originally written by Prof. Yoder
-// Modified by Manuel Stephan for homework 9 in eLinux 
-// javascript -.- 
+// Modified by Manuel Stephan for homework 9 in eLinux
+// javascript -.-
    var socket;
     var firstconnect = true,
         i2cNum  = "0x70",
-	disp = [];
+    disp = [];
 
 // Create a matrix of LEDs inside the <table> tags.
 var matrixData;
 for(var j=7; j>=0; j--) {
-	matrixData += '<tr>';
-	for(var i=0; i<8; i++) {
-	    matrixData += '<td><div class="LED" id="id'+i+'_'+j+
-		'" onclick="LEDclick('+i+','+j+')">'+
-		i+','+j+'</div></td>';
-	    }
-	matrixData += '</tr>';
+    matrixData += '<tr>';
+    for(var i=0; i<8; i++) {
+        matrixData += '<td><div class="LED" id="id'+i+'_'+j+
+        '" onclick="LEDclick('+i+','+j+')">'+
+        i+','+j+'</div></td>';
+        }
+    matrixData += '</tr>';
 }
 $('#matrixLED').append(matrixData);
 
@@ -23,8 +23,8 @@ $('#matrixLED').append(matrixData);
 // this looks like a finite state machine ... :)
 function LEDclick(i, j) {
 //        alert(i+","+j+" clicked");
-        i=i*2; 
-// both zero -> set green to one 
+        i=i*2;
+// both zero -> set green to one
 if ((((disp[i] >> j) & 0x1) === 0)&&(((disp[i+1] >> j) & 0x1) === 0)) {
         disp[i] ^= 0x1<<j;
 }
@@ -32,27 +32,27 @@ if ((((disp[i] >> j) & 0x1) === 0)&&(((disp[i+1] >> j) & 0x1) === 0)) {
 // green is active red is low -> toggle both
 else if ((((disp[i] >> j) & 0x1) === 1)&&(((disp[i+1] >> j) & 0x1) === 0)) {
         disp[i] ^= 0x1<<j;
-	disp[i+1] ^= 0x1<<j;
+    disp[i+1] ^= 0x1<<j;
 }
-// red is active green is low -> activate green 
+// red is active green is low -> activate green
  else if ((((disp[i] >> j) & 0x1) === 0)&&(((disp[i+1] >> j) & 0x1) === 1)) {
         disp[i] ^= 0x1<<j;
-            } 
-// both are one -> set both to zero 
+            }
+// both are one -> set both to zero
 else {
             disp[i] ^= 0x1<<j;
-	    disp[i+1] ^= 0x1<<j;
+        disp[i+1] ^= 0x1<<j;
     }
 
-// here the actual paremeters are given to the server ... 
-    socket.emit('i2cset', {i2cNum: i2cNum, i: i,// setting the green leds 
+// here the actual paremeters are given to the server ...
+    socket.emit('i2cset', {i2cNum: i2cNum, i: i,// setting the green leds
                          disp: '0x'+disp[i].toString(16)});
 
-    socket.emit('i2cset', {i2cNum: i2cNum, i: i+1,// setting the red ones 
+    socket.emit('i2cset', {i2cNum: i2cNum, i: i+1,// setting the red ones
                                  disp: '0x'+disp[i+1].toString(16)});
          //alert('0x'+((disp[i+1]<<8)+disp[i]).toString(16));
 //        socket.emit('i2c', i2cNum);
-// Modifying the web presence ... 
+// Modifying the web presence ...
     if ((((disp[i] >> j) & 0x1) === 1)&&(((disp[i+1] >> j) & 0x1) === 0)) {
         $('#id' + i/2 + '_' + j).addClass('onG');
     } else if ((((disp[i] >> j) & 0x1) === 0)&&(((disp[i+1] >> j) & 0x1) === 1)) {
@@ -113,12 +113,12 @@ else {
         // Every other pair of digits are Green. The others are red.
         // Ignore the red.
         // Convert from hex.
-        for (i = 0; i < data.length; i += 2) {
-            disp[i / 2] = parseInt(data[i], 16);
+        for (i = 0; i < data.length; i += 1) {
+            disp[i] = parseInt(data[i], 16);
         }
         //        status_update("disp: " + disp);
         // i cycles through each column
-        for (i = 0; i < disp.length; i++) {
+        for (i = 0; i < disp.length; i+=2) {
             // j cycles through each bit
              for (j = 0; j < 8; j++) {
                     $('#id' + i/2 + '_' + j).removeClass('onG');
@@ -135,11 +135,11 @@ else {
         }
     }
     function status_update(txt){
-	$('#status').html(txt);
+    $('#status').html(txt);
     }
 
     function updateFromLED(){
-      socket.emit("matrix", i2cNum);    
+      socket.emit("matrix", i2cNum);   
     }
 
 connect();
