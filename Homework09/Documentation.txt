@@ -1,0 +1,34 @@
+My matrixLED.js only controls one of the two LEDs in the matrix. Your task is to make it 
+
+control both LEDS. One approach would be to have the first click turn on the Green LED, the 2nd
+
+turn on both, the 3rd
+
+1. Before writing any code, write a paragraph describing how boneServer.js and the browser 
+
+interact in the given example. For example, in matrixLED.js connect() is called to make 
+
+a connection between the browser and the bone. The message “matrix” is sent to the 
+
+bone. What happens in response to the message? 
+
+
+
+2. What happens when an “LED” is clicked on in the browser?
+
+
+
+3. What entry in matrix.css is used to color the LED?
+
+The attribute backgroundcolour is used to define the colour of the LED. 
+
+
+
+
+4. Write a high level paragraph about how you will control the two LEDs. What messages 
+
+will be sent between the browser and the bone?
+
+
+
+5. Write your code. Do you need to change boneServer.js? (I don’t think so.)
