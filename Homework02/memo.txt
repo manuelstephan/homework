@@ -1,0 +1,16 @@
+Manuel Stephan, eLinux memo02.
+
+- got an account on github.com
+- read basics on github helppages and in gitpro book.
+- did exercises to modify the 2 c programs on your git repros.
+- created homework repository 
+- Did exercises on interfacing via bash and c. 
+- was able to acces onboard leds via bash 
+- was able to wire up external leds with a resistor and acces them via c and bash.
+- wrote basic etch a sketch program in c
+- was able to read gpios with bash and c.
+- explored /sys/class/ and found other hardwaredevices like fans in thermal, got root rights in ubbntu and was able to manipulate the files 
+- did not understand the interrupt struct and spent a long time trying to figure out how to access the data if an interrupt occured  
+- finaly got the 4 leds with interrupts running 
+- etch a sketch works with keyboardbuttons but nor yet with buttons on the board. 
+
