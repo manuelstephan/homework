@@ -3,19 +3,31 @@ Manuel Stephan, eLinux memo03.
 
 Exercises:
 ==========
-Exercise 12: I2C: 
-TMPaddrfloat: 0x49
+Exercise 12: I2C: Exercise done!
+
 
 
 Assignments:
 ============
 
 TMP101: 
+-------
 The TI-TMP101 has one Pin that is used to configure its address so that more than one of the same IC can be used on one bus. There are three modes: Pullup, Pulldown and floating that all result in a different address of the TMP. 
+Setting the thresholds of both 101's with system()
+Reading the interrupts with a modified file from ridgerun ...
+converting the read value with bc to farenheit 
+
+=> Everything works and can be demoed. 
+
+Etch-a-Sketch:
+--------------
+Level-converter is wired up and works. 
+Can see the ledmatrix on 0x70 on the bus.
+Demo in /exercises/i2c/ also works on matrix.
+ 
 
 
 
 Comments:
 =========
-Just googled:
-Slew Rate: The slew rate defines how fast a edge rises/falls if the voltage of an outputpin is changed. This is important if you got capacitative load like the gate of a big MOS-FET. 
+
